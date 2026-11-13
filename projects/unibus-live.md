@@ -32,6 +32,6 @@ UniBus Live is a GPS-based transport tracking system designed to help passengers
 
 The **latest project development was carried out in private repositories** on a separate GitHub account. The older public `bus-tracking-frontend` and `bus-tracking-backend` repositories on the main account are not presented as the latest source code.
 
-- [Public project posters and documentation](https://github.com/mdshishirhossain/unibus-live-poster)
+**Demonstration:** A verified live demo is not available while the previous VPS backend is offline. The next suitable option is a separate demo deployment using **sample accounts, sample routes, and synthetic GPS data**, with no production database or credentials. Until that is available, this page documents the project without presenting obsolete URLs as working demos.
 
-Screenshots and demonstration media can be added here after reviewing them for correctness and privacy. The previous poster README may contain outdated deployment URLs and uptime statements; those should not be treated as current service availability.
+**Media:** Curated screenshots or a short walkthrough video can be added after confirming they reflect the current application and contain no personal data.
