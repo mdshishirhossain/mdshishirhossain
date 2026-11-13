@@ -1,39 +1,56 @@
 # Md. Shishir Hossain
 
-**Computer Science & Engineering Graduate · Web & Software Development**
+**CSE Graduate · Building web, mobile & research applications**
 
-I'm a CSE graduate of **NPI University of Bangladesh (2026, CGPA 3.80/4.00)** with hands-on experience building web applications, APIs, database-backed systems, and academic software projects.
+I work on software that people actually use: tools for university transport, research fieldwork, and institutional content management. My interests sit where **application development, dependable data handling, and practical deployment** meet.
 
-My recent work includes a university bus tracking platform, a research survey application, and university website redevelopment. I focus on practical problem-solving, structured development, testing, and clear documentation.
+**Based in Bangladesh** · BSc in CSE, NPI University of Bangladesh (2026) · CGPA **3.80/4.00**
 
-## Selected Projects
+## Work I've built
 
-| Project | Overview | Technologies | Details |
-| --- | --- | --- | --- |
-| **UniBus Live — University Bus Tracking** | GPS-based transport tracking with administration, driver and passenger workflows. Developed as a final-year project and pilot-tested. The previous VPS-hosted backend is currently offline. | Next.js, Node.js, TypeScript, PostgreSQL, Redis, Socket.IO, React Native | [Project overview](projects/unibus-live.md) · [Posters](https://github.com/mdshishirhossain/unibus-live-poster) |
-| **Nirapod — Research Survey Application** | A Bangla-language, consent-based research survey with offline support, a supervisor interface, and data export. Currently used for research data collection. | Next.js, TypeScript, PostgreSQL, Prisma | [Project overview](projects/nirapod-survey.md) |
-| **NPI University Website Redevelopment** | Laravel-based institutional website and content management work, including admin features and legacy content migration. | PHP, Laravel, Filament, MySQL, Tailwind CSS | [Project overview](projects/npiub-website.md) |
+### 01 / UniBus Live — finding the bus without the guesswork
 
-> **Source code and demonstrations:** The more recent UniBus Live code and the Nirapod/NPIUB repositories are maintained privately. The older public UniBus repositories on this account should not be treated as the latest source. Project overviews are provided without exposing private code, research responses, or infrastructure details.
+Students need more than a timetable: they need to know where their bus is and whether it will arrive on time. This final-year project brings together driver GPS updates, passenger tracking, route and trip management, and an admin interface.
 
-## Technical Toolkit
+**What I worked with:** Next.js · React Native · Node.js/Express · TypeScript · PostgreSQL · Redis · Socket.IO
 
-- **Languages:** JavaScript, TypeScript, PHP
-- **Web:** React, Next.js, Laravel, Node.js, Express
-- **Data:** PostgreSQL, MySQL, Redis, Prisma
-- **Tools & practices:** Git, GitHub, Docker, API integration, testing, documentation, AI-assisted development
+**Status:** Developed and pilot-tested. The previous VPS backend is offline; **no working live demo is currently claimed**.
 
-I use AI tools as part of my development workflow while reviewing, testing, and validating the resulting work.
+[Explore the project →](projects/unibus-live.md)
 
-## Education
+### 02 / Nirapod — collecting research responses responsibly
 
-**BSc in Computer Science and Engineering** — NPI University of Bangladesh, 2026  
-**CGPA:** 3.80 / 4.00
+A Bangla-language research survey system focused on women's access to washrooms outside the home. Its engineering challenges include consent, unreliable connectivity, response recovery, controlled access, and research-ready exports.
 
-## Contact
+**What I worked with:** Next.js · TypeScript · Prisma · PostgreSQL
 
-- **Email:** [mdshishirhossain3@gmail.com](mailto:mdshishirhossain3@gmail.com)
-- **GitHub:** [github.com/mdshishirhossain](https://github.com/mdshishirhossain)
+**Status:** In use for fieldwork. The production survey is **not a public demo**; real responses and access links remain private.
+
+[Explore the project →](projects/nirapod-survey.md)
+
+### 03 / NPI University — maintaining institutional information
+
+Redevelopment work on a university website with staff-facing content management, roles and permissions, public academic information, and legacy-data migration. The application is designed around the constraints of shared hosting.
+
+**What I worked with:** Laravel · PHP · Filament · MySQL · Tailwind CSS
+
+**Status:** Website redevelopment and deployment work. The university's existing public site is available, but the rebuilt Laravel application's production cutover has not been independently verified.
+
+[Explore the project →](projects/npiub-website.md) · [University website (existing site)](https://npiub.edu.bd/)
 
 ---
-*Interested in junior software development, web applications, and practical technology projects.*
+
+## How I work
+
+I start with the problem and the data flow, then develop in small, testable steps. I use Git, documentation, automated checks, and AI-assisted tools where useful—but treat verification, privacy, and safe deployment as part of the job.
+
+**Core stack:** TypeScript · JavaScript · PHP · React / Next.js · Laravel · Node.js / Express · PostgreSQL · MySQL · Redis · Git / GitHub
+
+## About & contact
+
+**BSc, Computer Science and Engineering** — NPI University of Bangladesh, 2026
+
+- [Email](mailto:mdshishirhossain3@gmail.com)
+- [GitHub](https://github.com/mdshishirhossain)
+
+<sub>The latest UniBus development and the Nirapod/NPIUB source repositories are private. Older public Bus Tracking repositories on this account are not the current source. Public demos and media will only be linked after availability, privacy, and permissions are checked.</sub>
