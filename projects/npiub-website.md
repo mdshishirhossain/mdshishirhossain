@@ -1,84 +1,193 @@
-# NPI University of Bangladesh
-### Institutional website redevelopment under real hosting and data-migration constraints
+# NPI University of Bangladesh — Website Redevelopment
 
-**Work:** Website Developer · **Period:** June 2026–present  
-**Application:** Laravel 12, Filament, MySQL/MariaDB, Blade, Tailwind CSS  
-**Status:** Redevelopment and staging/deployment work documented; production cutover of the rebuilt Laravel site has **not** been independently verified.
+### Modernizing an institutional publishing system without risking its existing data
 
-[← Portfolio](../README.md)
+**Role:** Website Developer · **Period:** June 2026–present  
+**Stack:** Laravel 12 · PHP · Filament 4 · Blade · Tailwind CSS · MySQL/MariaDB · Alpine/Livewire  
+**Workstream:** Public-facing institutional website, administration, legacy-data migration and quality engineering  
+**Release status:** The private repository documents staging and deployment preparation; **a verified production cutover for this Laravel redevelopment is not established.**
+
+[← Return to portfolio](../README.md) · [Existing official university website](https://npiub.edu.bd/)
+
+> **Link clarification:** The official domain identifies the university's current public website. It is **not** presented here as independent proof that this specific Laravel redevelopment is already live.
 
 ---
 
-## 01 / The assignment
+## Executive overview
 
-An institutional website has multiple responsibilities: present academic information publicly, allow authorized staff to update content and preserve years of existing records. Replacing the pages alone is not enough if notices, faculty information or media disappear in the process.
+A university website is a long-lived institutional record, not simply a set of landing pages. It has to present courses, departments and people accurately; allow staff to publish notices and events; and preserve legacy material during upgrades.
 
-This project approaches the university website as both a **public information system** and an **administrative publishing workflow**.
+The assignment was to build a modern Laravel-based application with staff-facing content management under practical shared-hosting constraints, while documenting a safe path from the old data model to a new one.
 
-## 02 / Product scope
+The major challenges were **publishing workflow**, **data continuity**, **hosting limitations** and **interface consistency**.
 
-| Surface | Main responsibilities |
-| --- | --- |
-| **Public website** | Academic departments and programmes, announcements, notices, events, people profiles and information pages |
-| **Staff administration** | Content management, permissions, media and institutional settings |
-| **Legacy transition** | Import existing content into a normalized schema without overwriting the original source |
-| **Delivery and quality** | Responsive styling, testing, accessibility checks, asset builds and deployment preparation |
+## 01 / Users and information journeys
 
-## 03 / Architecture shaped by constraints
+| Audience | Need | Application approach |
+| --- | --- | --- |
+| Prospective students | Find programmes, requirements and academic information | Public academic pages with structured programme/department relationships |
+| Current students and visitors | Find notices, events, downloads and contacts | Dedicated publication types and navigation |
+| Faculty and university staff | Maintain accurate institutional content | Authorized administration and structured editing tools |
+| Website administrators | Manage roles, media, settings and content quality | Filament resource management, permissions and audit support |
+| Maintainers | Update safely without losing historical records | Legacy importer, staging workflow and automated verification |
 
-The target hosting environment is shared cPanel hosting without long-running Node services or Redis. That ruled out copying assumptions from a typical VPS-based stack.
+These users have different needs. A general-purpose text editor cannot replace structured academic content modeling, and an attractive public page cannot compensate for unreliable administrative records.
+
+## 02 / Architectural constraints
+
+The intended hosting environment is traditional shared cPanel hosting rather than an always-on application VPS. It does not permit the same long-running Node, queue-worker and Redis assumptions commonly made in cloud-native stacks.
+
+The repository therefore documents a hosting-specific delivery model:
 
 ```text
-Public site / staff panel
-           │
-     Laravel + Filament
-           │
-     MySQL / MariaDB
-           │
-  Prepared assets (built in CI)
-           │
-   cPanel-compatible deployment
+         Browser
+            │
+            ▼
+  Laravel public pages / Filament panel
+            │
+            ├── MySQL / MariaDB content records
+            ├── Role-based content operations
+            ├── Media and audit features
+            └── Scheduled work via hosting-compatible cron
+
+ Development / GitHub CI
+            │
+            └── Build frontend assets outside hosting
+                   │
+                   ▼
+                Deployable assets + application
+                   │
+                   ▼
+              Separate staging environment
 ```
 
-The application uses server-rendered Blade templates with Tailwind and interactive components where required. Database/file/synchronous options replace services unavailable on the target host.
+The diagram illustrates repository design, not an independently verified production runtime.
 
-**Why it matters:** Technical architecture should reflect the infrastructure a client actually operates, not only a developer's preferred stack.
+**Technology decisions:** Blade provides server-rendered pages; Filament handles administrative resources; Tailwind and Alpine/Livewire are used where the design benefits from interaction. The documented environment uses database/file/synchronous options instead of assuming Redis or long-running workers.
 
-## 04 / The legacy-data problem
+## 03 / Legacy migration: protecting institutional continuity
 
-The repository documents a repeatable migration path:
+The clearest engineering challenge is documented in `docs/DATA-MIGRATION.md`.
 
-1. Preserve the original database and restore a separate read-only copy for inspection.
-2. Map old tables and inconsistent department strings to a normalized new schema.
-3. Import data through stable legacy identifiers and repeatable upserts.
-4. Keep legacy source data unchanged; verify reconciliation and Bangla text handling.
+A direct destructive replacement of the legacy database would be risky: older faculty, officer, notice, gallery and user records are part of the institution's operational history.
 
-The migration tests cover representative mappings, role conversions, preserved relationships and the ability to rerun imports without generating duplicate records.
+The planned and implemented migration model uses:
 
-This is a documented safety design and test strategy; it does not imply production data was modified during this portfolio review.
+1. **A separate restored source copy.** The old production database stays untouched; migration reads from an isolated legacy connection.
+2. **Normalized destination tables.** Inconsistent legacy structures and free-text department labels are mapped to a cleaner application model.
+3. **Stable upsert anchors.** Legacy identifiers support repeatable imports rather than creating duplicates on every run.
+4. **Transactional steps and reconciliation.** Import operations can be checked against expected record mappings.
+5. **Bangla-preserving encoding.** The tests explicitly cover multilingual text handling.
 
-## 05 / Administrative and design decisions
+### Example transformations, at a conceptual level
 
-**Publishing instead of hard-coded updates.** Staff-facing Filament resources cover institutional content types, reducing dependence on code edits for routine updates.
+| Before | After | Reason |
+| --- | --- | --- |
+| Faculty and officer records stored under different legacy shapes | Unified people model with defined roles/types | Reduces redundant display logic |
+| Departments represented by inconsistent strings | Structured department entities | Improves links between people and academic units |
+| Flat gallery media | Album and image relationships | Makes media manageable |
+| Existing notices and news with legacy file paths | Structured content with preserved legacy references | Supports later file-aware migration |
+| Legacy user permissions | Application role/permission model | Clarifies administration access |
 
-**Permissions and accountability.** Role and permission management and audit logging support separation of administrative responsibilities.
+This is a documented implementation and validation strategy. It is not a claim that production data was rewritten during this portfolio review.
 
-**Design-system consistency.** The repository's redesign audit identified uneven content widths, typography scales, cards and responsive behaviors, followed by shared layout and component changes across page templates.
+## 04 / Content administration
 
-**Accessibility as a measurable check.** A recorded automated audit covered 15 representative page types in light and dark modes. The repository reports zero flagged WCAG A/AA issues *under that automated test* after fixes; this does not establish full accessibility compliance, which also requires manual testing.
+The repository contains Filament resources for academic departments, programmes, faculty members, notices, news, events, downloads, offices, user accounts and other institution-specific entities.
 
-**Deployment discipline.** The documented process builds frontend assets outside the shared host and deploys to staging with separate data and configuration before any cutover.
+**Why separate resource types?** Notices, academic profiles and programmes have different fields, dates, relationships and approval expectations. Giving all of them a common text editor would make reporting and content accuracy harder.
 
-## 06 / Quality and project status
+Role-based access control and audit-logging packages are present in the application design. The exact internal administrative routes and authorization details are not published here.
 
-The repository documents CI checks (Pest, Pint, Larastan and asset compilation), staging preparation, migration tooling and design/accessibility review.
+## 05 / Design-system work
 
-The university's public website may be online, but that alone does not prove this specific Laravel rebuild is the production version. This case study intentionally avoids presenting a public URL as a verified demo of the rebuild.
+The repository's redesign documentation records concrete consistency problems uncovered across the site:
 
-Screenshots should be added only when confirmed to depict the intended version and approved for public sharing.
+- Page templates were using conflicting content widths.
+- Academic and notice layouts lacked a consistent reading hierarchy.
+- Typography, radii and shadows varied excessively across components.
+- Mobile contact actions and some keyboard/focus interactions needed improvement.
+- Some pages held useful stored fields that never appeared on the public page.
 
-## 07 / What this work demonstrates
+The redesign report describes how shared layout widths, typography rules and reusable content components were introduced.
 
-This project combines Laravel development with content modeling, access control, data migration, design-system discipline and deployment planning. A key lesson is that **safe institutional modernization means preserving the client's data and publishing workflows while improving the interface**.
+This illustrates a useful engineering lesson: **a design system is as much about making content trustworthy and maintainable as it is about visual polish.**
 
-*The source repository remains private. This case study excludes credentials, private operational paths, client records and internal administration URLs.*
+### Example: information architecture
+
+The academic area must let a visitor move from a department to its individual programmes, rather than display programme names as unlinked text. That is an information-architecture decision, not merely a visual one.
+
+Similarly, news and research pages should have consistent bylines, document metadata and navigation conventions where the content model supports them.
+
+## 06 / Accessibility and quality checks
+
+The private repository includes `docs/QUALITY-BASELINE.md`, recording an automated axe-core review of **15 representative public page types**, in both light and dark themes.
+
+The report states that its WCAG A/AA automated violations decreased from **95 to 0 flagged issues** after the documented fixes.
+
+**Interpretation is important:** this is a *repository-reported automated audit*, not independent certification. Automated scans do not replace keyboard-only evaluation, screen reader testing or user research; the report explicitly lists manual checks and Lighthouse performance assessment as follow-up work.
+
+The repository also contains CI workflows and tests for:
+
+- Laravel application behavior using Pest.
+- Formatting standards using Laravel Pint.
+- Static analysis using Larastan.
+- Frontend asset compilation.
+- Legacy import behavior and content-specific user journeys.
+
+Test files and documented checks provide tangible engineering evidence, but are not proof that every production deployment has passed them.
+
+## 07 / Deployment design and status
+
+The documented deployment path uses a **separate staging environment** and a private repository build process appropriate for cPanel hosting.
+
+The intended safety invariants are:
+
+- Keep the existing university website and its data unchanged during staging work.
+- Import from a restored copy, not the live production database.
+- Build web assets before deployment when the hosting environment cannot build them.
+- Verify staging behavior and content before any eventual production cutover.
+- Preserve a rollback path.
+
+**Current reporting boundary:** the university website can be visited publicly, but the repository still documents a separate go-live/cutover phase. A candidate should not present that domain as a verified live demo of the rebuild without checking which version is running and obtaining any necessary institutional permission.
+
+## 08 / Evidence matrix
+
+The following are descriptive paths from a **private** repository, shared to establish the basis for this summary rather than expose source:
+
+| Area | Evidence |
+| --- | --- |
+| Architecture | `README.md`, Laravel application structure |
+| Publishing | `app/Filament/Resources/` and related models |
+| Migration | `docs/DATA-MIGRATION.md`, `app/Console/Commands/MigrateLegacy.php` |
+| Migration verification | `tests/Feature/LegacyImportTest.php` |
+| Quality | `docs/QUALITY-BASELINE.md`, `docs/redesign-report.md` |
+| Deployment planning | `DEPLOYMENT.md`, GitHub Actions workflows |
+| Accessibility checks | `tests/Feature/AccessiblePassTest.php` and documented audit |
+
+## 09 / What the project demonstrates
+
+The value of the work is not merely that it uses Laravel. It brings together:
+
+- Structured content modeling for an actual institution.
+- Staff-facing publishing with access-control considerations.
+- Legacy-data transformation with repeatability and safe staging.
+- Responsive visual-system improvement based on an explicit audit.
+- Testing and deployment strategies adjusted to limited hosting infrastructure.
+
+**Main takeaway:** good institutional software must improve the user experience while respecting the existing data, operations and technical environment.
+
+## 10 / Screenshots and future demo
+
+A useful portfolio presentation would include a small, approved set of images:
+
+1. Public homepage and academic programme pages.
+2. A representative administrative content list with dummy records.
+3. A before/after layout comparison with any sensitive content removed.
+4. A brief walkthrough of a typical notice or programme update.
+
+These materials have **not** been added here because no approved, version-verified demo media was available in the examined repository. The private administration interface and actual university data should not be made public purely for portfolio purposes.
+
+---
+
+*Portfolio case study grounded in inspected project documentation and code structure. Private client data, credentials, hosting account details and administrative endpoints are excluded.*
