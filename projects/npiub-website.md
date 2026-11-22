@@ -28,7 +28,7 @@ This project approaches the university website as both a **public information sy
 
 The target hosting environment is shared cPanel hosting without long-running Node services or Redis. That ruled out copying assumptions from a typical VPS-based stack.
 
-\`\`\`text
+```text
 Public site / staff panel
            │
      Laravel + Filament
@@ -38,7 +38,7 @@ Public site / staff panel
   Prepared assets (built in CI)
            │
    cPanel-compatible deployment
-\`\`\`
+```
 
 The application uses server-rendered Blade templates with Tailwind and interactive components where required. Database/file/synchronous options replace services unavailable on the target host.
 
