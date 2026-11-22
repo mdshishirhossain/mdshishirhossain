@@ -27,7 +27,7 @@ The web application includes administrative pages for fleet and route management
 
 ## 03 / Architecture and data flow
 
-\`\`\`text
+```text
 Driver mobile / supported location source
             │ GPS observations
             ▼
@@ -41,7 +41,7 @@ Driver mobile / supported location source
                Passenger live map / ETA
                             │
                 Admin operations view
-\`\`\`
+```
 
 This is a conceptual map of the implemented components, not a production infrastructure diagram.
 
