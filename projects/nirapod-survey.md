@@ -27,7 +27,7 @@ The product deliberately separates the participant-facing experience from the st
 
 ## 03 / System model
 
-\`\`\`text
+```text
 Participant device
      │ consent + questionnaire
      ▼
@@ -43,7 +43,7 @@ Validated Next.js application
        Supervisor review
               │
        Research export
-\`\`\`
+```
 
 This is an intentionally simplified technical overview; internal security controls and production topology are not published.
 
