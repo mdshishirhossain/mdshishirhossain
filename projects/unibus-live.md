@@ -9,6 +9,14 @@
 
 ---
 
+## My contribution
+
+I worked on application development across mobile, web and API workflows for our final-year university project, including driver location updates, passenger tracking and trip management. Android builds were pilot-tested and the team presented the project at the university fair.
+
+## A decision behind the passenger display
+
+Two position reports can disagree even when both devices are working. The tracking service records which feed supplied the selected position and why it was chosen. Arrival estimates use the ordered stops and available speed observations. This separates the question “where was the bus last seen?” from the question “how confidently can we estimate arrival at this stop?” A location marker alone answers only the first question.
+
 ## Executive overview
 
 A conventional bus schedule describes the *plan*; it does not answer the question a waiting passenger actually has: **Where is my bus, which trip is active, and how reliable is the arrival estimate?**
@@ -57,27 +65,16 @@ This separation is intentional: transport staff must manage the underlying recor
 
 ## 03 / Architecture
 
-```text
-     Driver phone                GPS-device integration
-          │                             │
-          └──────── location observations ────────┐
-                                                  ▼
-             Next.js admin / passenger UI   Express + TypeScript API
-                           │                      │
-                           │               Authentication / roles
-                           │               Trip lifecycle / checks
-                           │               Tracking source selection
-                           │                      │
-                           │             ┌────────┴────────┐
-                           │             ▼                 ▼
-                           │           Redis         PostgreSQL
-                           │      transient state   persistent records
-                           │             │              Prisma
-                           │             └────────┬────────┘
-                           │                      ▼
-                           └──────────── Socket.IO events
-                                                  │
-                                       Live trip + ETA views
+```mermaid
+flowchart TD
+  D["Driver phone GPS"] --> S["Select a location for the active trip"]
+  H["Vehicle GPS device"] --> S
+  S --> R["Temporary trip state in Redis"]
+  P["Ordered stops in PostgreSQL"] --> E["Estimate arrival by stop"]
+  R --> E
+  R --> L["Live trip events"]
+  L --> V["Passenger tracking view"]
+  E --> V
 ```
 
 *Conceptual diagram assembled from repository modules; it does not reveal deployment topology or internal service addresses.*
