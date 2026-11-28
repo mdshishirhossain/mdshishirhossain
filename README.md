@@ -1,29 +1,45 @@
 # MD. Shishir Hossain
 
-**Full-stack developer and logo designer · Manikganj, Bangladesh**
+**Software development · Web and mobile applications · Real-world systems**
 
-I build software for university staff, students and researchers. My work spans a publishing system that preserves Bangla records during migration, a university bus tracker that reconciles two GPS feeds, and a mobile survey that can recover from interrupted connectivity. I also work on brand identities and logos through Fiverr.
+I build software around practical problems: making university transport easier to follow, supporting research fieldwork, and managing institutional information. My work spans user interfaces, APIs, structured data, testing, and the operational details that matter after an application is built.
+
+[Portfolio](https://md-shishir-hossain-portfolio.vercel.app/) · [LinkedIn](https://www.linkedin.com/in/md-shishir-hossain-8a7260196/) · [Email](mailto:mdshishirhossain3@gmail.com)
 
 ## Selected engineering work
 
-| Project | My contribution | Read the case study |
+| Project | Engineering focus | Case study |
 | --- | --- | --- |
-| NPI University of Bangladesh website | Built staff publishing tools in Laravel and Filament and worked on repeatable imports from a copy of the university’s legacy database. | [Publishing and migration](projects/npiub-website.md) |
-| UniBus Live | Contributed across the web, mobile and API workflows of our final-year project. We connected driver and device locations with active trips and passenger arrival estimates. | [Real-time tracking](projects/unibus-live.md) |
-| Nirapod | Developed a Bangla research questionnaire with consent, offline draft recovery and analytical exports that exclude participant contact fields. | [Field research software](projects/nirapod-survey.md) |
+| **UniBus Live** | Driver and GPS-device location feeds, trip lifecycle, passenger tracking, and arrival estimates across web, API, and mobile workflows. | [Real-time transport system](projects/unibus-live.md) |
+| **Nirapod** | Bangla-first research questionnaires, consent, offline-aware draft recovery, controlled fieldwork access, and privacy-aware analytical exports. | [Research and fieldwork platform](projects/nirapod-survey.md) |
+| **NPI University website redevelopment** | Laravel/Filament content administration, legacy-data migration, structured academic content, accessibility checks, and safe staging. | [Institutional publishing system](projects/npiub-website.md) |
 
-## Professional background
+### What these projects taught me
 
-**Website Developer, NPI University of Bangladesh** · June 2026–present
-University website redevelopment, content migration, application testing and shared-hosting staging.
+- **Live data needs context.** A map marker is useful only when its source, active trip, and update time are reliable.
+- **Offline resilience is a product decision.** A survey must preserve progress and enforce consent when connectivity is inconsistent.
+- **Migration is more than moving rows.** Institutional software must preserve old records, support repeatable imports, and keep production safe.
 
-**Graphic Designer, Fiverr** · October 2019–present
-Freelance brand identity and logo design using Adobe Illustrator and Photoshop.
+The case studies explain the design choices, available code/test evidence, limitations, and what has *not* been independently verified. Current development repositories for these systems are private; the case studies intentionally exclude sensitive operational details.
 
-**BSc in Computer Science and Engineering**, NPI University of Bangladesh · 2026
+## Technologies used in these projects
 
-## Tools in these projects
+**Web and API:** TypeScript, JavaScript, React, Next.js, Node.js, Express, PHP, Laravel, Filament  
+**Mobile and real-time:** React Native, Socket.IO, Redis  
+**Data and delivery:** PostgreSQL, Prisma, MySQL/MariaDB, Git, GitHub, automated tests and deployment workflows
 
-I use PHP, Laravel, Filament and MySQL for institutional publishing. My TypeScript projects use React, Next.js, Express and PostgreSQL, with React Native for mobile interfaces and Redis and Socket.IO for real-time tracking.
+These are technologies used across different projects, not a claim that every tool was used in every system.
 
-[LinkedIn](https://www.linkedin.com/in/md-shishir-hossain-8a7260196/) · [Email](mailto:mdshishirhossain3@gmail.com)
+## Background
+
+BSc in Computer Science and Engineering — **NPI University of Bangladesh** (2026).
+
+I also have experience with visual and logo design. My primary focus on this profile is the engineering work and the evidence behind it.
+
+## Availability and transparency
+
+- **UniBus Live:** previously demonstrated; the earlier hosted backend is offline, so no live demo is claimed here.
+- **Nirapod:** in use for research fieldwork; the production survey and participant data are not public portfolio demos.
+- **University website:** the current public university domain is not proof that the separate Laravel redevelopment has completed production cutover.
+
+For project details, start with the three case studies above or visit my [portfolio](https://md-shishir-hossain-portfolio.vercel.app/).
