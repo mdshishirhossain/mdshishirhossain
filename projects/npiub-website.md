@@ -13,6 +13,14 @@
 
 ---
 
+## My contribution
+
+As the website developer, I built staff publishing workflows in Laravel and Filament, worked on the legacy importer, and prepared the application for testing and shared-hosting staging. Staff need to maintain notices and academic information while readers need a consistent route from a department to its people and programs.
+
+## A decision behind the migration
+
+The importer can process selected record types or produce a reconciliation report. Its test fixture builds a temporary legacy-shaped database with Bangla text, departments shared across records, and an empty research table. One test runs the importer twice and checks for duplicates. Running the same import twice models a realistic staging retry and tests a risk that a successful first import would miss.
+
 ## Executive overview
 
 A university website is a long-lived institutional record, not simply a set of landing pages. It has to present courses, departments and people accurately; allow staff to publish notices and events; and preserve legacy material during upgrades.
@@ -39,26 +47,14 @@ The intended hosting environment is traditional shared cPanel hosting rather tha
 
 The repository therefore documents a hosting-specific delivery model:
 
-```text
-         Browser
-            │
-            ▼
-  Laravel public pages / Filament panel
-            │
-            ├── MySQL / MariaDB content records
-            ├── Role-based content operations
-            ├── Media and audit features
-            └── Scheduled work via hosting-compatible cron
-
- Development / GitHub CI
-            │
-            └── Build frontend assets outside hosting
-                   │
-                   ▼
-                Deployable assets + application
-                   │
-                   ▼
-              Separate staging environment
+```mermaid
+flowchart TD
+  L["Restored legacy database"] --> I["Import and reconcile records"]
+  I --> DB["MySQL or MariaDB"]
+  F["Authorized staff"] --> A["Filament administration"]
+  A --> DB
+  DB --> B["Laravel and Blade pages"]
+  B --> V["Students and visitors"]
 ```
 
 The diagram illustrates repository design, not an independently verified production runtime.

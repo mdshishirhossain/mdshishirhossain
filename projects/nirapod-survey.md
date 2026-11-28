@@ -9,6 +9,14 @@
 
 ---
 
+## My contribution
+
+I developed the Bangla participant questionnaire, offline-aware recovery, supervisor review and analytical exports for the university research team. The study concerns women’s access to washrooms outside the home. The software supports the people conducting the study and completing its questionnaire.
+
+## A decision behind the research export
+
+Researchers need to count how many people selected each option in a multi-select question. The export gives each option a binary column. Its headers and codebook come from the same questionnaire definition, so adding an option changes both outputs together. An automated structural test checks the headers for contact identifiers. This covers the export fields themselves. Free-text answers still need appropriate handling during analysis.
+
 ## Executive overview
 
 Nirapod supports a university research study on women's experiences accessing washrooms outside the home. This application is the **research survey and fieldwork system**—not the future washroom-finder app described in the study's wider motivation.
@@ -30,25 +38,15 @@ The system's public participant surface and its staff-facing operational surface
 
 ## 02 / System boundaries
 
-```text
-Participant (mobile)
-    │
-    ├── Eligibility / informed consent
-    │
-    ├── Structured Bangla questionnaire
-    │         └── local draft / offline-aware recovery
-    │
-    ▼
-Validated application requests (Next.js / TypeScript)
-    │
-    ├── Survey response persistence (Prisma + PostgreSQL)
-    ├── Protected contact-data handling
-    ├── Controlled staff/fieldwork workflows
-    └── Audit and review services
-                    │
-                    ▼
-        Analytical export + codebook
-        (without identifying contact fields)
+```mermaid
+flowchart TD
+  M["Bangla mobile questionnaire"] --> D["Local draft"]
+  D --> C["Record consent"]
+  C --> S["Sync changed sections"]
+  S --> A["Survey answers"]
+  A --> X["Analytical export"]
+  Q["Questionnaire definition"] --> X
+  Q --> B["Research codebook"]
 ```
 
 The diagram is purposely conceptual. Publishing authentication internals, research-only routes or deployment addresses would not improve a recruiter's understanding and could increase exposure.
